@@ -1,0 +1,38 @@
+export const projects = [
+  {
+    id: 1,
+    title: "BSU Tech Discount System",
+    description: "A modern student discount platform that helps BSU students save money on tech purchases. Features include student verification, personalized deals, and a user-friendly mobile interface.",
+    image: "https://images.unsplash.com/photo-1607082349566-187342175e2f?q=80&w=2070&auto=format&fit=crop",
+    category: ["Web Development"],
+    github: "https://github.com/yourusername/bsu-tech-discount",
+    demo: "https://bsu-tech-discount.vercel.app",
+  },
+  {
+    id: 2,
+    title: "WiFi Security Auditing Tool",
+    description: "A comprehensive WiFi network security assessment tool built with Python. Identifies vulnerabilities and provides detailed reports with remediation steps.",
+    image: "https://images.unsplash.com/photo-1562813733-b31f71025d54?q=80&w=2069&auto=format&fit=crop",
+    category: ["Cybersecurity", "Python"],
+    github: "https://github.com/yourusername/wifi-audit",
+    demo: "https://wifi-audit-demo.vercel.app",
+  },
+  {
+    id: 3,
+    title: "CNN MRI Classifier",
+    description: "A deep learning model using Convolutional Neural Networks to classify MRI scans. Achieves 95% accuracy in detecting abnormalities.",
+    image: "https://images.unsplash.com/photo-1583911860205-72f8ac8ddcbe?q=80&w=2070&auto=format&fit=crop",
+    category: ["AI/ML", "Python"],
+    github: "https://github.com/yourusername/cnn-mri",
+    demo: "https://cnn-mri-demo.vercel.app",
+  },
+  {
+    id: 4,
+    title: "AI-Powered Portfolio",
+    description: "A modern portfolio website with AI-enhanced features like dynamic content generation and interactive animations. Built with Next.js and Framer Motion.",
+    image: "https://images.unsplash.com/photo-1579403124614-197f69d8187b?q=80&w=2064&auto=format&fit=crop",
+    category: ["Web Development", "AI/ML"],
+    github: "https://github.com/yourusername/portfolio",
+    demo: "https://your-portfolio.vercel.app",
+  },
+]; 

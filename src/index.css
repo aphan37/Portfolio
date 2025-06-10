@@ -1,76 +1,233 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 222.2 84% 4.9%;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
 
-      --card: 0 0% 100%;
-      --card-foreground: 222.2 84% 4.9%;
+  .dark {
+    --background: 235 40% 5%;
+    --foreground: 210 40% 98%;
+    --card: 235 40% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 235 40% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 280 85% 65%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 235 40% 15%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 235 40% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 280 85% 65%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 235 40% 15%;
+    --input: 235 40% 15%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
 
-      --popover: 0 0% 100%;
-      --popover-foreground: 222.2 84% 4.9%;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground relative min-h-screen;
+  }
 
-      --primary: 222.2 47.4% 11.2%;
-      --primary-foreground: 210 40% 98%;
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
 
-      --secondary: 210 40% 96.1%;
-      --secondary-foreground: 222.2 47.4% 11.2%;
+  .dark body::before {
+    background: 
+      radial-gradient(circle at 15% 50%, rgba(147, 51, 234, 0.25), transparent 35%),
+      radial-gradient(circle at 85% 30%, rgba(192, 132, 252, 0.25), transparent 35%),
+      radial-gradient(circle at 50% 80%, rgba(126, 34, 206, 0.25), transparent 35%);
+    animation: aurora 25s ease infinite;
+  }
 
-      --muted: 210 40% 96.1%;
-      --muted-foreground: 215.4 16.3% 46.9%;
-
-      --accent: 210 40% 96.1%;
-      --accent-foreground: 222.2 47.4% 11.2%;
-
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 214.3 31.8% 91.4%;
-      --input: 214.3 31.8% 91.4%;
-      --ring: 222.2 84% 4.9%;
-
-      --radius: 0.5rem;
+  @keyframes aurora {
+    0% {
+      transform: rotate(0deg) scale(1);
     }
-
-    .dark {
-      --background: 222.2 84% 4.9%;
-      --foreground: 210 40% 98%;
-
-      --card: 222.2 84% 4.9%;
-      --card-foreground: 210 40% 98%;
-
-      --popover: 222.2 84% 4.9%;
-      --popover-foreground: 210 40% 98%;
-
-      --primary: 210 40% 98%;
-      --primary-foreground: 222.2 47.4% 11.2%;
-
-      --secondary: 217.2 32.6% 17.5%;
-      --secondary-foreground: 210 40% 98%;
-
-      --muted: 217.2 32.6% 17.5%;
-      --muted-foreground: 215 20.2% 65.1%;
-
-      --accent: 217.2 32.6% 17.5%;
-      --accent-foreground: 210 40% 98%;
-
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 217.2 32.6% 17.5%;
-      --input: 217.2 32.6% 17.5%;
-      --ring: 212.7 26.8% 83.9%;
+    50% {
+      transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
     }
   }
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+  .dark body {
+    background-image: 
+      radial-gradient(rgba(255, 255, 255, 0.85) 1px, transparent 1px),
+      radial-gradient(rgba(255, 255, 255, 0.85) 1px, transparent 1px);
+    background-size: 75px 75px;
+    background-position: 0 0, 37.5px 37.5px;
+    background-repeat: repeat;
+    background-color: hsl(var(--background));
   }
+
+  .dark body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Twinkling stars effect */
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .dark body::before {
+    animation: twinkle 6s ease-in-out infinite;
+  }
+
+  /* Add some larger, brighter stars */
+  .dark body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(rgba(255, 255, 255, 0.95) 1px, transparent 2px),
+      radial-gradient(rgba(255, 255, 255, 0.95) 2px, transparent 3px);
+    background-size: 150px 150px, 200px 200px;
+    background-position: 0 0, 75px 75px;
+    pointer-events: none;
+    z-index: -1;
+    animation: twinkle 8s ease-in-out infinite alternate;
+  }
+}
+
+/* Space background animations */
+@keyframes animStar {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+#stars {
+  background: transparent;
+  box-shadow: 
+    479px 832px #FFF,
+    1212px 1941px #FFF,
+    1402px 1797px #FFF,
+    556px 1302px #FFF,
+    1476px 1342px #FFF;
+  animation: animStar 50s linear infinite;
+}
+
+#stars:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: 
+    479px 832px #FFF,
+    1212px 1941px #FFF,
+    1402px 1797px #FFF,
+    556px 1302px #FFF,
+    1476px 1342px #FFF;
+}
+
+#stars2 {
+  background: transparent;
+  box-shadow: 
+    179px 712px #FFF,
+    1912px 1841px #FFF,
+    1102px 1597px #FFF,
+    856px 1202px #FFF,
+    1276px 1242px #FFF;
+  animation: animStar 100s linear infinite;
+}
+
+#stars2:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: 
+    179px 712px #FFF,
+    1912px 1841px #FFF,
+    1102px 1597px #FFF,
+    856px 1202px #FFF,
+    1276px 1242px #FFF;
+}
+
+#stars3 {
+  background: transparent;
+  box-shadow: 
+    79px 532px #FFF,
+    1512px 1641px #FFF,
+    902px 1397px #FFF,
+    656px 1002px #FFF,
+    1076px 1042px #FFF;
+  animation: animStar 150s linear infinite;
+}
+
+#stars3:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: 
+    79px 532px #FFF,
+    1512px 1641px #FFF,
+    902px 1397px #FFF,
+    656px 1002px #FFF,
+    1076px 1042px #FFF;
+}

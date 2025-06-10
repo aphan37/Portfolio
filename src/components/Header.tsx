@@ -1,82 +1,71 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
+import { Link } from 'react-scroll';
+import { motion } from 'framer-motion';
+import { useTheme } from "./theme-provider";
 
-interface HeaderProps {
-  darkMode?: boolean;
-  onToggleDarkMode?: () => void;
-}
+const navLinks = [
+  { name: 'About', href: '#about' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Contact', href: '#contact' },
+];
 
-const Header = ({
-  darkMode = false,
-  onToggleDarkMode = () => {},
-}: HeaderProps) => {
-  // Initialize dark mode from localStorage or default to false
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("darkMode");
-      return saved ? JSON.parse(saved) : false;
-    }
-    return darkMode;
-  });
-
-  // Apply dark mode class to document element
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (isDarkMode) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-      localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
-    }
-  }, [isDarkMode]);
-
-  // Handle dark mode toggle
-  const handleToggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    onToggleDarkMode();
-  };
+const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  // Navigation links
-  const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Projects", href: "#projects" },
-    { name: "Skills", href: "#skills" },
-    { name: "Contact", href: "#contact" },
-  ];
+  // After mounting, we have access to the theme
+  useEffect(() => setMounted(true), []);
 
-  // Handle scroll effect for sticky header
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Toggle mobile menu
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Close mobile menu when clicking a link
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  // Prevent hydration issues
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-background ${isScrolled ? "shadow-md py-2" : "py-4"}`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-background/80 backdrop-blur-lg border-b border-border ${
+        isScrolled ? "shadow-lg py-2" : "py-4"
+      }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo/Name */}
-        <a href="#" className="text-xl font-bold">
-          <span className="text-primary">Portfolio</span>
-        </a>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <a href="#" className="text-xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
+            Anh Phan
+          </a>
+        </motion.div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
@@ -84,7 +73,7 @@ const Header = ({
             <a
               key={link.name}
               href={link.href}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors font-medium"
             >
               {link.name}
             </a>
@@ -94,13 +83,13 @@ const Header = ({
           <Button
             variant="ghost"
             size="icon"
-            onClick={handleToggleDarkMode}
-            aria-label="Toggle dark mode"
+            onClick={toggleTheme}
+            className="w-9 h-9 rounded-full hover:bg-purple-500/10"
           >
-            {isDarkMode ? (
-              <Sun className="h-5 w-5" />
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5 text-yellow-500" />
             ) : (
-              <Moon className="h-5 w-5" />
+              <Moon className="h-5 w-5 text-purple-500" />
             )}
           </Button>
         </nav>
@@ -110,14 +99,14 @@ const Header = ({
           <Button
             variant="ghost"
             size="icon"
-            onClick={handleToggleDarkMode}
-            className="mr-2"
+            onClick={toggleTheme}
+            className="mr-2 hover:bg-primary/10"
             aria-label="Toggle dark mode"
           >
-            {isDarkMode ? (
-              <Sun className="h-5 w-5" />
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5 text-yellow-500" />
             ) : (
-              <Moon className="h-5 w-5" />
+              <Moon className="h-5 w-5 text-purple-500" />
             )}
           </Button>
 
@@ -125,12 +114,13 @@ const Header = ({
             variant="ghost"
             size="icon"
             onClick={toggleMobileMenu}
+            className="hover:bg-primary/10"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5 text-foreground" />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5 text-foreground" />
             )}
           </Button>
         </div>
@@ -138,13 +128,13 @@ const Header = ({
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-background border-t border-border">
+        <div className="md:hidden bg-background/80 backdrop-blur-lg border-t border-border">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-foreground hover:text-primary transition-colors py-2"
+                className="text-foreground hover:text-primary transition-colors py-2 font-medium"
                 onClick={handleLinkClick}
               >
                 {link.name}

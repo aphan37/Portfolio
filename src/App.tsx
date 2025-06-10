@@ -1,19 +1,20 @@
-import { Suspense } from "react";
-import { useRoutes, Routes, Route } from "react-router-dom";
-import Home from "./components/home";
-import routes from "tempo-routes";
+import { ThemeProvider } from "./components/theme-provider"
+import Header from "./components/Header"
+import Home from "./components/home"
+import SpaceBackground from "./components/SpaceBackground"
 
 function App() {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-        {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
-      </>
-    </Suspense>
-  );
+    <ThemeProvider defaultTheme="system" storageKey="portfolio-theme">
+      <div className="min-h-screen bg-background text-foreground relative">
+        <SpaceBackground />
+        <Header />
+        <main>
+          <Home />
+        </main>
+      </div>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App

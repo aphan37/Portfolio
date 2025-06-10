@@ -1,88 +1,76 @@
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 
 interface ProjectCardProps {
-  title?: string;
-  description?: string;
-  image?: string;
-  tags?: string[];
-  liveUrl?: string;
-  sourceUrl?: string;
-  category?: string;
+  title: string;
+  description: string;
+  image: string;
+  category: string[];
+  github: string;
+  demo: string;
 }
 
-const ProjectCard = ({
-  title = "Project Title",
-  description = "A short description of the project and the technologies used to build it.",
-  image = "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&q=80",
-  tags = ["React", "TypeScript", "Tailwind"],
-  liveUrl = "#",
-  sourceUrl = "#",
-  category = "Web Development",
-}: ProjectCardProps) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  title,
+  description,
+  image,
+  category,
+  github,
+  demo,
+}) => {
   return (
-    <Card
-      className="overflow-hidden transition-all duration-300 h-full bg-card border border-border"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -5 }}
     >
-      <div className="relative overflow-hidden aspect-video">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 ease-in-out"
-          style={{
-            transform: isHovered ? "scale(1.05)" : "scale(1)",
-          }}
-        />
-        <div
-          className="absolute inset-0 bg-black/60 dark:bg-black/80 flex items-center justify-center opacity-0 transition-opacity duration-300"
-          style={{
-            opacity: isHovered ? 0.8 : 0,
-          }}
-        >
-          <div className="flex gap-2">
-            {liveUrl && (
-              <Button size="sm" variant="secondary" asChild>
-                <a href={liveUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Live Demo
-                </a>
-              </Button>
-            )}
-            {sourceUrl && (
-              <Button size="sm" variant="outline" asChild>
-                <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
-                  <Github className="mr-2 h-4 w-4" />
-                  Source
-                </a>
-              </Button>
-            )}
+      <Card className="overflow-hidden bg-opacity-80 backdrop-blur-lg bg-gray-900 border-gray-800 hover:border-blue-500/50 transition-all duration-300">
+        <div className="relative aspect-video group">
+          <img
+            src={image}
+            alt={title}
+            className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />
+        </div>
+        <div className="p-6">
+          <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-blue-400 transition-colors">{title}</h3>
+          <p className="text-gray-300 mb-4 line-clamp-3">{description}</p>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {category.map((cat) => (
+              <span
+                key={cat}
+                className="px-3 py-1 rounded-full text-sm bg-blue-500/20 text-blue-300"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-4">
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 bg-transparent border-gray-700 text-gray-300 hover:bg-gray-800 hover:border-blue-500/50"
+              onClick={() => window.open(github, '_blank')}
+            >
+              <Github size={16} />
+              GitHub
+            </Button>
+            <Button
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+              onClick={() => window.open(demo, '_blank')}
+            >
+              <ExternalLink size={16} />
+              Live Demo
+            </Button>
           </div>
         </div>
-      </div>
-      <CardContent className="p-4">
-        <div className="mb-1">
-          <Badge variant="secondary" className="text-xs mb-2">
-            {category}
-          </Badge>
-        </div>
-        <h3 className="text-lg font-semibold mb-2">{title}</h3>
-        <p className="text-sm text-muted-foreground mb-3">{description}</p>
-        <div className="flex flex-wrap gap-1 mt-auto">
-          {tags.map((tag, index) => (
-            <Badge key={index} variant="outline" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+      </Card>
+    </motion.div>
   );
 };
 
