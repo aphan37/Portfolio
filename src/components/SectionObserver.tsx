@@ -2,10 +2,11 @@ import { useEffect, useRef } from 'react';
 
 interface SectionObserverProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-export default function SectionObserver({ children }: SectionObserverProps) {
-  const sectionRef = useRef<HTMLElement>(null);
+const SectionObserver = ({ children, className = "" }: SectionObserverProps) => {
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -13,12 +14,17 @@ export default function SectionObserver({ children }: SectionObserverProps) {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            // Add active class to all scroll-reveal elements within the section
+            const revealElements = entry.target.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
+            revealElements.forEach((el) => {
+              el.classList.add('active');
+            });
           }
         });
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -10% 0px'
       }
     );
 
@@ -34,8 +40,10 @@ export default function SectionObserver({ children }: SectionObserverProps) {
   }, []);
 
   return (
-    <section ref={sectionRef}>
+    <div ref={sectionRef} className={className}>
       {children}
-    </section>
+    </div>
   );
-} 
+}
+
+export default SectionObserver; 
