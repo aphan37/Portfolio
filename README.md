@@ -8,7 +8,7 @@ A modern and responsive personal portfolio website showcasing projects, skills, 
 
 ## 📸 Screenshots
 
-*(Include screenshots here if available, or update this section later)*
+![image](https://github.com/user-attachments/assets/7ee54a1e-b034-4aab-8c14-c0cc724d7f5c)
 
 ## ✨ Features
 
@@ -28,7 +28,7 @@ A modern and responsive personal portfolio website showcasing projects, skills, 
 | CSS3      |             | Git/GitHub    |
 | JavaScript (Vanilla) |        | Responsive Design Principles |
 
-> This project uses no frameworks (React, Vue, etc.) for lightweight performance and full custom control.
+> This project uses a variety of tech stack including Vite, React and TailwindCSS for lightweight performance and full custom control.
 
 ## 🚀 Getting Started
 
@@ -66,8 +66,8 @@ Portfolio/
 
 For feedback or collaborations, feel free to connect via:
 
-- [LinkedIn](https://linkedin.com/in/yourname) *(Update with your actual link)*
-- Email: youremail@example.com *(Update accordingly)*
+- [LinkedIn](https://linkedin.com/in/anhphan37) 
+- Email: anhphan502174@gmail.com
 
 ---
 
